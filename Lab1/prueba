@@ -1,0 +1,30 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+N = 10 + 1
+x = np.arange(0, N)
+y = np.array([3, -5, 8, -8, 1, 0, 6, -9, 6, 0, 3])
+
+# Create the Vandermonde matrix
+V = np.column_stack([x**k for k in range(N-1, -1, -1)])
+
+# Solve for the coefficients
+coefficients = np.linalg.solve(V, y)
+
+# Define the Vandermonde polynomial function
+def vandermonde_poly(x):
+    return sum(c * x**k for k, c in enumerate(coefficients[::-1]))
+
+# Plot the data points
+plt.scatter(x, y, label='Data Points')
+
+# Plot the Vandermonde polynomial
+x_values = np.linspace(0, N-1, 1000)
+y_values = vandermonde_poly(x_values)
+plt.plot(x_values, y_values, label='Vandermonde Polynomial', color='red')
+
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend()
+plt.show()
+
